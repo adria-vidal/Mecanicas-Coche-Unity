@@ -4,28 +4,56 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    
+    //Colliders
     [SerializeField] WheelCollider frontRight;
     [SerializeField] WheelCollider frontLeft;
     [SerializeField] WheelCollider backRight;
     [SerializeField] WheelCollider backLeft;
+
+    //Meshes
+    [SerializeField] Transform frontRightTransform;
+    [SerializeField] Transform frontLeftTransform;
+    [SerializeField] Transform backRightTransform;
+    [SerializeField] Transform backLeftTransform;
+
 
     public float acceleration = 500f;
     public float breakingForce = 300f;
     private float currentAceleration = 0f;
     private float currentBreakingForce = 0f;
 
+    //Giro de Ruedas
+    private float currentTurnAngle = 0f;
+    private float maxTurnAngle = 15f;
 
 
-    // Start is called before the first frame update
-    void Start()
+    private void FixedUpdate()
     {
-        
-    }
+        currentAceleration = acceleration * Input.GetAxis("Vertical");
+        Debug.Log(currentAceleration);
+        if (Input.GetKey(KeyCode.Space))
+        {
+            currentBreakingForce = breakingForce;
+        }
+        else
+        {
+            currentBreakingForce = 0f;
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //Apply acceleration wheels
+        frontRight.motorTorque = currentAceleration;
+        frontLeft.motorTorque = currentAceleration;
+
+        frontRight.brakeTorque = currentBreakingForce;
+        frontLeft.brakeTorque = currentBreakingForce;
+        backRight.brakeTorque = currentBreakingForce;
+        backRight.brakeTorque = currentBreakingForce;
+
+        //steerAngle =  Angulo de dirección de grados alrededor del eje
+        //giro de ruedas
+        currentTurnAngle = maxTurnAngle * Input.GetAxis("Horizontal");
+        frontLeft.steerAngle = currentTurnAngle;
+        frontRight.steerAngle = currentTurnAngle;
+
     }
 }
