@@ -66,5 +66,10 @@ public class Movement : MonoBehaviour
         frontLeft.steerAngle = currentTurnAngle;
         frontRight.steerAngle = currentTurnAngle;
 
+        UpdateWheel(frontLeft,frontLeftTransform);
+        UpdateWheel(frontRight,frontRightTransform);
+        UpdateWheel(backLeft,backLeftTransform);
+        UpdateWheel(backRight,backRightTransform);
+
     }
 }
