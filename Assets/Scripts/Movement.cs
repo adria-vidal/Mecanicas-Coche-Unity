@@ -27,6 +27,17 @@ public class Movement : MonoBehaviour
     private float maxTurnAngle = 15f;
 
 
+    //Quaternior para hacer el movimento realista
+    //función para que la rueda rote visualmente
+    void UpdateWheel(WheelCollider col, Transform trans){
+        Vector3 position;
+        Quaternion rotation;
+        col.GetWorldPose(out position, out rotation);
+
+        trans.position = position;
+        trans.rotation = rotation;
+
+    }
     private void FixedUpdate()
     {
         currentAceleration = acceleration * Input.GetAxis("Vertical");
